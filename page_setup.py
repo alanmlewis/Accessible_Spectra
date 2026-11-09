@@ -7,7 +7,13 @@ def page_setup():
                'nmr': "NMR Plot"}
                
     bg_choices = {"#aebbff": "Blue",
-               "#ffe4a9": "Yellow"}
+                "#ffffff": "White",
+                "#ffe4a9": "Yellow"}
+               
+    lc_choices = {"#000000": "Black",
+                "#ffffff": "White",
+                "#aebbff": "Blue",
+                "#ffe4a9": "Yellow"}
                
     # Define the main user interface layout using a fluid page that scales with the browser width
     app_ui = ui.page_fluid(
@@ -48,17 +54,28 @@ def page_setup():
                     desc["T"],
                 ),
                 
-                # Temperature slider (ID: 'T', Range: 100 to 500 K, Default: 298, Step: 1) wrapped in a tooltip
+                # Slider for line width
                 ui.tooltip(
                     ui.input_slider(
-                        "T", "Temperature (K)", 100, 500, 298, step=1
+                        "lw", "Line Width", 1, 5, 1, step=0.25
                     ),
                     desc["T"],
                 ),
-                # Scan Rate text input field (ID: 'v', Default: 100) wrapped in a tooltip
+                
+                # Dropdown menu for line colour
                 ui.tooltip(
-                    ui.input_text("v", "Scan Rate (mV/s)", 100), desc["v"]
+                    ui.input_select(
+                        "lc", "Line Colour", lc_choices, multiple = False
+                    ),
+                    desc["T"],
                 ),
+                
+                ui.download_button("dl_button", "Download Plot"),
+                
+                # Scan Rate text input field (ID: 'v', Default: 100) wrapped in a tooltip
+                # ui.tooltip(
+                #    ui.input_text("v", "Scan Rate (mV/s)", 100), desc["v"]
+                # ),
                 # Checkbox group for toggling peak visual features (ID: 'peaks', Options: peak_choices) wrapped in a tooltip
                 #ui.tooltip(
                 #    ui.input_checkbox_group("peaks", "Show:", peak_choices),
